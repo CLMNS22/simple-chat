@@ -5,7 +5,6 @@
 <style>
   .page-content {
     padding: 100px 200px;
-    display: flex;
   }
 </style>
 
@@ -38,18 +37,26 @@
   <main class="mdl-layout__content">
     <div class="page-content"><!-- Your content goes here -->
       
-      <!-- Textfield with Floating Label -->
-      <form action="#">
+      {% comment %} <div>
+        admin: {{message}}
+        </div> {% endcomment %}
+
+      {% for message in messages %}
+      <div>
+        <span> [{{ message.created_at }}] </span> <i> {{ message.author }}: {{ message.text }}</i>  <br>
+      </div>
+      {% endfor %}
+
+      <form action="/chat/" method="post">
+        {% csrf_token %}
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="sample3">
+          <input class="mdl-textfield__input" name="messageText" type="text" id="sample3">
           <label class="mdl-textfield__label" for="sample3">Text...</label>
         </div>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Senden
+        </button>
       </form>
-
-      <!-- Accent-colored raised button with ripple -->
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-        Senden
-      </button>
 
 
     </div>
