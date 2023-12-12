@@ -35,11 +35,10 @@
     </nav>
   </div>
   <main class="mdl-layout__content">
-    <div class="page-content"><!-- Your content goes here -->
-      
-      {% comment %} <div>
-        admin: {{message}}
-        </div> {% endcomment %}
+    <div class="page-content">
+
+
+      {% if request.user.is_authenticated %}
 
       {% for message in messages %}
       <div>
@@ -57,7 +56,10 @@
           Senden
         </button>
       </form>
-
+      {% else %}
+      <h1>Not logged in</h1>
+      <p>You are not logged in. To login please click</p> <a href="{% url 'login' %}">here</a>
+      {% endif %}
 
     </div>
   </main>
