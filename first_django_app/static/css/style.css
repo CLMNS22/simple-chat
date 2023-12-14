@@ -1,3 +1,113 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+}
+
 .page-content {
     padding: 100px 200px;
+}
+
+.landingWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    width: 100dvw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.landingLeft {
+    padding-right: 40px;
+    background-color: #686869;
+    width: 50vw;
+    width: 50dvw;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.landingRight {
+    padding-left: 40px;
+    background-color: #f1f1f3;
+    width: 50vw;
+    width: 50dvw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.django {
+    margin: 2rem 0;
+    color: #f1f1f3;
+    font-size: 4em;
+    animation: slideFromLeft 1.5s ease-out;
+    animation-delay: 0.5s;
+}
+
+.django:hover {
+    background-image: linear-gradient(70deg, red, rgb(0, 255, 119));
+    background-clip: text;
+    color: transparent;
+}
+
+@keyframes slideFromLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.gradientText {
+    background-image: linear-gradient(70deg, red, rgb(0, 255, 119));
+    background-clip: text;
+    color: transparent;
+}
+
+.loginInput {
+    border-radius: 4px;
+    border: 2px solid; /* Set a default solid border */
+    /* border-image: linear-gradient(70deg, red, rgb(0, 255, 119)); */
+    border-color: #FF4742;
+    border-image-slice: 1;
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 6px; /* You can adjust the padding value as needed */
+    width: 300px; /* You can set the width based on your design */
+    box-sizing: border-box;
+}
+
+.buttonLogin {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.buttonLogin:hover,
+.buttonLogin:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.buttonLogin:active {
+    opacity: .5;
 }

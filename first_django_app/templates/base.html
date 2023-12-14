@@ -24,8 +24,7 @@
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="{% url 'logout' %}">Logout</a>
                 </nav>
             </div>
         </header>
@@ -40,7 +39,7 @@
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
-                {% block content %}{% endblock content %}
+                {% block content %}{% endblock %}
             </div>
         </main>
     </div>

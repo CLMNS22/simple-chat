@@ -1,22 +1,38 @@
-{% extends 'base.html' %}{% block content %}
-
-<h1>Login</h1>
-
-{% if wrongPassword %}
-  <p>Username or Password incorrect.</p>
-{% endif %}
-
-<form action="/login/" method="POST" >
-  {% csrf_token %}
-  <div>
-    <input type="hidden" name="redirect_to" value="{{redirect_to}}">
-    <div>
-      <input type="text" name="username" />
+{% comment %} {% extends 'base.html' %}
+{% block content %}
+  {% endcomment %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <div class="landingWrapper">
+    
+    <div class="landingLeft">
+      <span class="django">Welcome</span>
+      <span class="django">to</span>
+      <span class="django">Django</span>
+      <span class="django">Chat</span>
     </div>
-    <div>
-      <input type="password" name="password" />
+    <div class="landingRight">
+      <div class="loginSection">
+        <h1 class="gradientText">Please Log in</h1>
+        {% if wrongPassword %}
+          <p>Username or Password incorrect.</p>
+        {% endif %}
+        <form action="/login/" method="POST">
+          {% csrf_token %}
+          <div>
+            <input type="hidden" name="redirect_to" value="{{ redirect_to }}" />
+            <div>
+              <input class="loginInput" type="text" name="username" placeholder="Email"/>
+            </div>
+            <div>
+              <input class="loginInput" type="password" name="password" placeholder="Password"/>
+            </div>
+          </div>
+          <button class="buttonLogin" type="submit">Let's go</button>
+        </form>
+        <span>new here? </span><a href="{% url 'signup' %}"> sign up!</a>
+      </div>
     </div>
   </div>
-  <button type="submit">Login</button>
-</form>
-{% endblock content %}
+  {% comment %}
+{% endblock %} {% endcomment %}
