@@ -26,3 +26,6 @@ def userLogin(request):
         else:
             return render(request, 'chat/login.html', {'wrongPassword': True, 'redirect_to': redirect_to})
     return render(request, 'chat/login.html', {'redirect_to': redirect_to})
+
+def registerUser(request):
+    return()
