@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render #render is imported to generate an HTML file using a template and data
+from django.shortcuts import render, redirect #render is imported to generate an HTML file using a template and data
 from .models import Chat, Message
 
 # Create your views here.
@@ -16,13 +16,13 @@ def index(request):
     return render(request, 'chat/index.html', {"messages": chatMessages})
 
 def userLogin(request):
-    redirect = request.POST.get('next')
+    redirect_to = request.GET.get('next')
     if request.method == 'POST':
-        user = authenticate(request, username=request.POST.get('username'), password=request.POST.get('password'))
-        print(user)
+        redirect_to = request.POST.get('redirect_to')
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user:
             login(request, user)
-            return HttpResponseRedirect(redirect)
+            return redirect(redirect_to)
         else:
-            return render(request, 'chat/login.html', {'wrongPassword': True, 'redirect': redirect})
-    return render(request, 'chat/login.html', {'redirect': redirect})
+            return render(request, 'chat/login.html', {'wrongPassword': True, 'redirect_to': redirect_to})
+    return render(request, 'chat/login.html', {'redirect_to': redirect_to})
