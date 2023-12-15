@@ -7,10 +7,60 @@
 </div>
 {% endfor %}
 
-<form action="/chat/" method="post">
+<script>
+    async function sendMessage() {
+        let fd = new FormData();
+        let csrf_token = '{{ csrf_token }}'
+        fd.append('messageText', messageField.value);
+        fd.append('csrfmiddlewaretoken', csrf_token);
+        try {
+            await fetch('/chat/', {
+            method: 'POST',
+            body: fd
+        });
+        messageField.value = '';
+        await updateMessageHistory();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    async function updateMessageHistory() {
+    try {
+        // Fetch the updated messages
+        const response = await fetch('/chat/');  // Assuming your server returns the updated messages
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch messages');
+        }
+
+        // Parse the JSON response, assuming your server returns JSON data
+        const messages = await response.json();
+
+        // Update the HTML content with the new messages
+        const messageContainer = document.getElementById('messageContainer');  // Replace with the actual container ID
+        messageContainer.innerHTML = '';  // Clear existing content
+
+        // Append each message to the container
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<span> [${message.timestamp}] </span> <i> ${message.author}: ${message.text} </i>`;
+            messageContainer.appendChild(messageElement);
+        });
+
+        console.log('Message history updated');
+    } catch (error) {
+        console.error('Error updating message history:', error);
+    }
+}
+</script>
+
+
+<form onsubmit="sendMessage(); return false;" method="post">
     {% csrf_token %}
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" name="messageText" type="text" id="sample3">
+        <input class="mdl-textfield__input" name="messageText" type="text" id="messageField">
         <label class="mdl-textfield__label" for="sample3">Text...</label>
     </div>
     <button type="submit"

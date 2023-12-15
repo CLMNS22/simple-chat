@@ -5,17 +5,23 @@ from .models import Chat, Message
 from .forms import SignUpForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import JsonResponse
+from django.core.serializers import serialize
 
-# Create your views here.
 @login_required(login_url='/login/')
 def index(request):
     if request.method == 'POST':
-        print('received data' + request.POST['messageText'])
         myChat = Chat.objects.get(id=1)
         Message.objects.create(text=request.POST['messageText'], chat=myChat, author=request.user, receiver=request.user)
     
     chatMessages = Message.objects.filter(chat__id=1)
-    return render(request, 'chat/index.html', {"messages": chatMessages})
+
+    # Serialize the messages to JSON format
+    serialized_messages = serialize('json', chatMessages)
+
+    # Return a JsonResponse with the serialized messages
+    return JsonResponse({"messages": serialized_messages}, safe=False)
+
 
 
 def userLogin(request):

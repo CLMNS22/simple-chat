@@ -1,13 +1,13 @@
 {% comment %} {% extends 'base.html' %}
 {% block content %}
   {% endcomment %}
+  
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <div class="landingWrapper">
     
     <div class="landingLeft">
-      <span class="django">Welcome</span>
-      <span class="django">to</span>
+      <span class="django">Experience</span>
       <span class="django">Django</span>
       <span class="django">Chat</span>
     </div>
@@ -20,7 +20,7 @@
         <form action="/login/" method="POST">
           {% csrf_token %}
           <div>
-            <input type="hidden" name="redirect_to" value="{{ redirect_to }}" />
+            <input type="hidden" name="redirect_to" value="chat" />
             <div>
               <input class="loginInput" type="text" name="username" placeholder="Email"/>
             </div>
