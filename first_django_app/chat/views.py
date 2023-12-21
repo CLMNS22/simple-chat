@@ -12,16 +12,16 @@ from django.core.serializers import serialize
 def index(request):
     if request.method == 'POST':
         myChat = Chat.objects.get(id=1)
-        Message.objects.create(text=request.POST['messageText'], chat=myChat, author=request.user, receiver=request.user)
+        newMessage = Message.objects.create(text=request.POST['messageText'], chat=myChat, author=request.user, receiver=request.user)
+        serialized_message = serialize('json', [newMessage] )
+        return JsonResponse(serialized_message, safe=False)
     
     chatMessages = Message.objects.filter(chat__id=1)
-
     # Serialize the messages to JSON format
-    serialized_messages = serialize('json', chatMessages)
-
+    # serialized_messages = serialize('json', chatMessages)
     # Return a JsonResponse with the serialized messages
-    return JsonResponse({"messages": serialized_messages}, safe=False)
-
+    #return JsonResponse({"messages": serialized_messages}, safe=False)
+    return render(request=request, template_name="chat/index.html", context={"messages": chatMessages})
 
 
 def userLogin(request):

@@ -111,3 +111,7 @@ body {
 .buttonLogin:active {
     opacity: .5;
 }
+
+.color-grey {
+    color: #8c8c8c;    
+}

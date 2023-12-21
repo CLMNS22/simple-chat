@@ -2,8 +2,11 @@
 {% if request.user.is_authenticated %}
 
 {% for message in messages %}
-<div>
-    <span> [{{ message.created_at }}] </span> <i> {{ message.author }}: {{ message.text }}</i> <br>
+<div id="messageContainer">
+    <div>
+        <span class="color-grey"> [{{ message.created_at }}] </span> <i> {{ message.author }}: {{ message.text }}</i>
+        <br>
+    </div>
 </div>
 {% endfor %}
 
@@ -14,46 +17,26 @@
         fd.append('messageText', messageField.value);
         fd.append('csrfmiddlewaretoken', csrf_token);
         try {
-            await fetch('/chat/', {
-            method: 'POST',
-            body: fd
-        });
-        messageField.value = '';
-        await updateMessageHistory();
+            let response = await fetch('/chat/', {
+                method: 'POST',
+                body: fd
+            });
+
+            if(!response.ok){
+                throw new Error(response.statusText)
+            }
+            let newMessage = await response.json();
+            console.log(JSON.parse(newMessage));
+            messageContainer.innerHTML += `
+        <div>
+            <span class="color-grey"> [DATUM] </span>{{request.user.first_name}}:<i class="color-grey"> ${messageField.value} </i> <br>
+        </div>
+        
+        `;
         } catch (error) {
             console.log(error);
         }
     }
-
-
-    async function updateMessageHistory() {
-    try {
-        // Fetch the updated messages
-        const response = await fetch('/chat/');  // Assuming your server returns the updated messages
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch messages');
-        }
-
-        // Parse the JSON response, assuming your server returns JSON data
-        const messages = await response.json();
-
-        // Update the HTML content with the new messages
-        const messageContainer = document.getElementById('messageContainer');  // Replace with the actual container ID
-        messageContainer.innerHTML = '';  // Clear existing content
-
-        // Append each message to the container
-        messages.forEach(message => {
-            const messageElement = document.createElement('div');
-            messageElement.innerHTML = `<span> [${message.timestamp}] </span> <i> ${message.author}: ${message.text} </i>`;
-            messageContainer.appendChild(messageElement);
-        });
-
-        console.log('Message history updated');
-    } catch (error) {
-        console.error('Error updating message history:', error);
-    }
-}
 </script>
 
 
@@ -63,8 +46,7 @@
         <input class="mdl-textfield__input" name="messageText" type="text" id="messageField">
         <label class="mdl-textfield__label" for="sample3">Text...</label>
     </div>
-    <button type="submit"
-        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Senden
     </button>
 </form>
