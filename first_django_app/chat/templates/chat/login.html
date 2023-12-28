@@ -1,22 +1,11 @@
-{% comment %} {% extends 'base.html' %}
-{% block content %}
-  {% endcomment %}
-  
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-
+  <div class="greeting">Welcome to Django Chat</div>
   <div class="landingWrapper">
-    
-    <div class="landingLeft">
-      <span class="django">Experience</span>
-      <span class="django">Django</span>
-      <span class="django">Chat</span>
-    </div>
-    <div class="landingRight">
       <div class="loginSection">
-        <h1 class="gradientText">Please Log in</h1>
+        <h1 style="color: #3f51b5;">Please Log in</h1>
         {% if wrongPassword %}
-          <p>Username or Password incorrect.</p>
+          <p style="color: red;">Username or Password incorrect.</p>
         {% endif %}
         <form action="/login/" method="POST">
           {% csrf_token %}
@@ -33,7 +22,4 @@
         </form>
         <span>new here? </span><a href="{% url 'signup' %}"> sign up!</a>
       </div>
-    </div>
   </div>
-  {% comment %}
-{% endblock %} {% endcomment %}

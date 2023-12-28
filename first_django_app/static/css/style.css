@@ -1,78 +1,53 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: hidden;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .page-content {
-    padding: 100px 200px;
+    padding: 60px 60px;
 }
 
-.landingWrapper {
+.greeting {
+    position: absolute;
+    top: 100;
+    left: 0;
+    right: 0;
+    height: 120px;
+    color: rgb(255, 214, 80);
+    font-size: 80px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    animation: appear 3s ease-in;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+  } 
+
+.landingWrapper {
     width: 100vw;
     width: 100dvw;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
-}
-
-.landingLeft {
-    padding-right: 40px;
-    background-color: #686869;
-    width: 50vw;
-    width: 50dvw;
-    text-align: right;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-}
-
-.landingRight {
-    padding-left: 40px;
-    background-color: #f1f1f3;
-    width: 50vw;
-    width: 50dvw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.django {
-    margin: 2rem 0;
-    color: #f1f1f3;
-    font-size: 4em;
-    animation: slideFromLeft 1.5s ease-out;
-    animation-delay: 0.5s;
-}
-
-.django:hover {
-    background-image: linear-gradient(70deg, red, rgb(0, 255, 119));
-    background-clip: text;
-    color: transparent;
-}
-
-@keyframes slideFromLeft {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
-.gradientText {
-    background-image: linear-gradient(70deg, red, rgb(0, 255, 119));
-    background-clip: text;
-    color: transparent;
+    align-items: center;
 }
 
 .loginInput {
     border-radius: 4px;
     border: 2px solid; /* Set a default solid border */
-    /* border-image: linear-gradient(70deg, red, rgb(0, 255, 119)); */
-    border-color: #FF4742;
+    border-color: #3f51b5;
     border-image-slice: 1;
     font-size: 16px;
     margin: 10px 0;
@@ -82,8 +57,8 @@ body {
 }
 
 .buttonLogin {
-  background: #FF4742;
-  border: 1px solid #FF4742;
+  background: #3f51b5;
+  border: 1px solid #3f51b5;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
@@ -105,7 +80,7 @@ body {
 .buttonLogin:active {
   background-color: initial;
   background-position: 0 0;
-  color: #FF4742;
+  color: #3f51b5;
 }
 
 .buttonLogin:active {
@@ -114,4 +89,42 @@ body {
 
 .color-grey {
     color: #8c8c8c;    
+}
+
+.addChatButton{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('/static/img/chatBackground.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#messageContainer {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: rgb(244, 181, 97);
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    backdrop-filter: blur(10px); /* Adjust the blur strength as needed */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Add a border to enhance the outline effect */
+    border-radius: 10px; /* Optional: Add border-radius for rounded corners */
+}
+
+.sendMessageForm {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff; /* Add background color if needed */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
 }
