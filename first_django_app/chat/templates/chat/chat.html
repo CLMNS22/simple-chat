@@ -1,0 +1,72 @@
+{% extends 'base.html' %}{% block content %}
+{% if request.user.is_authenticated %}
+<script>
+    async function sendMessage() {
+        let fd = new FormData();
+        let csrf_token = '{{ csrf_token }}'
+        fd.append('messageText', messageField.value);
+        fd.append('csrfmiddlewaretoken', csrf_token);
+        let user = '{{ request.user.first_name }}';
+        console.log("Hello", user);
+        try {
+            const currentTime = getCurrentDateTime();
+            messageContainer.innerHTML += `
+            <div id="deleteMessage">
+                <span class="color-grey"> [${currentTime}] </span> ${user} :<i class="color-grey"> ${messageField.value} </i> <br>
+            </div>
+            `;
+            let response = await fetch('/chat/', {
+                method: 'POST',
+                body: fd
+            });
+    
+            if (response.ok) {
+                document.getElementById('deleteMessage').remove();
+                messageContainer.innerHTML += `
+                <div>
+                    <span class="color-grey"> [${currentTime}] </span>${user}:<i> ${messageField.value} </i> <br>
+                </div>
+                `;
+                messageField.value = '';
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    function getCurrentDateTime() {
+        const currentDate = new Date();
+        const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(currentDate);
+        const day = currentDate.getDate();
+        const year = currentDate.getFullYear();
+        const customFormattedDateTime = `${month}. ${day}, ${year}`;
+        return customFormattedDateTime;
+    }
+</script>
+
+<div id="messageContainer">
+    {% for message in messages %}
+        <div>
+            <span class="color-grey"> [{{ message.created_at }}] </span> <i> {{ message.author }}: {{ message.text }}</i>
+            <br>
+        </div>
+    {% endfor %}
+</div>
+
+<form onsubmit="sendMessage(); return false;" method="post">
+    {% csrf_token %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" name="messageText" type="text" id="messageField">
+        <label class="mdl-textfield__label" for="sample3">Text...</label>
+    </div>
+    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Senden
+    </button>
+</form>
+{% else %}
+<h1>Not logged in</h1>
+<p>You are not logged in. To login please click</p> <a href="{% url 'login' %}">here</a>
+{% endif %}
+{% endblock %}

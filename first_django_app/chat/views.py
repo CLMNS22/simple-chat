@@ -9,19 +9,19 @@ from django.http import JsonResponse
 from django.core.serializers import serialize
 
 @login_required(login_url='/login/')
-def index(request):
+def chat(request):
     if request.method == 'POST':
         myChat = Chat.objects.get(id=1)
         newMessage = Message.objects.create(text=request.POST['messageText'], chat=myChat, author=request.user, receiver=request.user)
         serialized_message = serialize('json', [newMessage] )
-        return JsonResponse(serialized_message, safe=False)
+        return JsonResponse(serialized_message[1:-1], safe=False)
     
     chatMessages = Message.objects.filter(chat__id=1)
     # Serialize the messages to JSON format
     # serialized_messages = serialize('json', chatMessages)
     # Return a JsonResponse with the serialized messages
     #return JsonResponse({"messages": serialized_messages}, safe=False)
-    return render(request=request, template_name="chat/index.html", context={"messages": chatMessages})
+    return render(request=request, template_name="chat/chat.html", context={"messages": chatMessages})
 
 
 def userLogin(request):

@@ -130,5 +130,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Livereload settings
-LIVERELOAD_HOST = 'http://127.0.0.1/'
+LIVERELOAD_HOST = '127.0.0.1'
 LIVERELOAD_PORT = '8000'
